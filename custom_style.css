@@ -1,0 +1,25 @@
+/* 1. Mở khóa cuộn chuột cho trang web */
+html, body {
+    overflow: auto !important;
+    height: auto !important;
+    user-select: text !important; /* Cho phép bôi đen copy */
+}
+
+/* 2. Ẩn các banner, popup đòi tiền, lớp phủ mờ */
+#upgrade-overlay,
+.banner-wrapper,
+[class*="paywall"],
+[class*="overlay"],
+#page-container-wrapper + div,
+.advertisement {
+    display: none !important;
+    z-index: -9999 !important;
+}
+
+/* 3. Đảm bảo khung tài liệu luôn hiện rõ (đề phòng bị ẩn) */
+.pf, .pc, #document-wrapper {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    filter: none !important;
+}

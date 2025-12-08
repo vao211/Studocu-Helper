@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Studocu Cleaner & Test",
+  "version": "1.3", 
+  "permissions": [
+    "cookies",
+    "scripting",  
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.studocu.com/*",
+    "*://*.studocu.vn/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Studocu Tools"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.studocu.com/*", "*://*.studocu.vn/*"],
+      "css": ["custom_style.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
