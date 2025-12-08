@@ -42,6 +42,7 @@ Do đây là công cụ phát triển cá nhân (chưa đưa lên Store), bạn 
 5. Chờ vài giây để tool xử lý, sau đó hộp thoại lưu PDF sẽ tự động hiện ra.
 
 ---
+[![Xem video demo]](https://www.youtube.com/watch?v=rt4mm-CTxqY)
 
 ## ⚠️ Lưu ý (Disclaimer)
 Công cụ này được tạo ra với mục đích hỗ trợ học tập và nghiên cứu cá nhân. Vui lòng sử dụng có trách nhiệm và tôn trọng bản quyền của tài liệu gốc.
@@ -49,4 +50,5 @@ Công cụ này được tạo ra với mục đích hỗ trợ học tập và 
 ---
 
 *Made with ❤️ by **Dat***
+
 
