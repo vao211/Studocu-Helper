@@ -1,4 +1,3 @@
-/* Styles cho Clean Viewer */
 body { 
     background-color: #f6f7fb !important; 
     margin: 0 !important; 
@@ -31,7 +30,6 @@ body > *:not(#clean-viewer-container) {
     border: none !important;
 }
 
-/* Thuộc đặc trị lằn đen */
 .std-page::after {
     content: "";
     position: absolute; 
