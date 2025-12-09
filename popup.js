@@ -1,4 +1,4 @@
-// ============ HÀM CẬP NHẬT TRẠNG THÁI ============
+// Status
 function updateStatus(msg, isProcessing = false) {
     const statusText = document.getElementById('status-text');
     const statusBar = document.getElementById('status');
@@ -16,7 +16,7 @@ function updateStatus(msg, isProcessing = false) {
     }
 }
 
-// --- BUTTON 1: XÓA COOKIES & RELOAD ---
+// Button to delete cookies & reload
 document.getElementById('clearBtn').addEventListener('click', async () => {
     updateStatus("Đang quét và xóa cookie...", true);
     
@@ -45,7 +45,7 @@ document.getElementById('clearBtn').addEventListener('click', async () => {
     }
 });
 
-// --- BUTTON 2: TẠO GIAO DIỆN SẠCH & IN PDF ---
+// Pê đê ép 
 document.getElementById('checkBtn').addEventListener('click', async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
@@ -73,7 +73,7 @@ function runCleanViewer() {
     const SCALE_FACTOR = 4;
     const HEIGHT_SCALE_DIVISOR = 4;
 
-    // --- HELPER FUNCTIONS ---
+    // Functions
     function copyComputedStyle(source, target, scaleFactor, shouldScaleHeight = false, shouldScaleWidth = false, heightScaleDivisor = 4, widthScaleDivisor = 4, shouldScaleMargin = false, marginScaleDivisor = 4) {
         const computedStyle = window.getComputedStyle(source);
         
@@ -197,7 +197,7 @@ function runCleanViewer() {
         return clone;
     }
 
-    // ============ BUILD VIEWER ============
+    // Build
     const viewerContainer = document.createElement('div');
     viewerContainer.id = 'clean-viewer-container';
 
@@ -205,7 +205,7 @@ function runCleanViewer() {
     
     pages.forEach((page, index) => {
         const pc = page.querySelector('.pc');
-        let width = 595.3;
+        let width = 595.3; //Fallback A4
         let height = 841.9;
 
         if (pc) {
