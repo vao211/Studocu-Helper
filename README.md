@@ -1,6 +1,6 @@
 #  Studocu Helper
 
-Một tiện ích mở rộng (Extension) nhẹ dành cho trình duyệt, giúp tối ưu hóa trải nghiệm đọc và lưu trữ tài liệu trên Studocu.
+Một tiện ích mở rộng nhẹ dành cho trình duyệt, giúp tối ưu hóa trải nghiệm đọc và lưu trữ tài liệu trên Studocu.
 
 > **Trạng thái:** v1.0
 
@@ -10,13 +10,13 @@ Công cụ này được phát triển để giải quyết các vấn đề hi�
 
 ## ✨ Tính năng chính
 
-### 1. Bypass Blur & Remove Watermark (Làm sạch giao diện)
+### 1. Bypass Blur & Remove Watermark 
 Đây là tính năng cốt lõi giúp hiển thị nội dung nguyên bản của tài liệu:
 - **Xóa lớp phủ mờ (Unblur):** Loại bỏ các layer che khuất nội dung, giúp văn bản hiển thị rõ nét 100%.
 - **Xóa Watermark:** Tự động ẩn các logo chìm, text quảng cáo hoặc các popup gây rối mắt đè lên nội dung.
 - **Tối ưu hiển thị:** Giữ lại định dạng gốc (font chữ, bố cục) để người dùng có trải nghiệm đọc tốt nhất.
 
-### 2. Smart PDF Export (Xuất PDF chuẩn A4)
+### 2. PDF Export 
 Tính năng hỗ trợ lưu tài liệu về máy để in ấn hoặc đọc offline:
 - **Render tự động:** Tự động cuộn và tải toàn bộ các trang tài liệu trước khi xuất.
 - **Chuẩn khổ giấy A4:** Tự động căn chỉnh lề và kích thước trang phù hợp với máy in thông dụng.
@@ -53,6 +53,7 @@ Công cụ này được tạo ra với mục đích hỗ trợ học tập và 
 ---
 
 *Made with ❤️ by **Dat***
+
 
 
 
