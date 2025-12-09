@@ -15,6 +15,7 @@ function updateStatus(msg, isProcessing = false) {
     }
 }
 
+// Delete Cookies & Reload
 document.getElementById('clearBtn').addEventListener('click', async () => {
     updateStatus("Đang quét và xóa cookie...", true);
     
@@ -43,10 +44,11 @@ document.getElementById('clearBtn').addEventListener('click', async () => {
     }
 });
 
+// PDF 
 document.getElementById('checkBtn').addEventListener('click', async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
-    // Inject CSS
+    // Inject CSS (co le~ khong co tac dung may:)
     chrome.scripting.insertCSS({
         target: { tabId: tab.id },
         files: ["custom_style.css"]
@@ -92,7 +94,7 @@ function runCleanViewer() {
             }
         });
         
-        // Xử lý Width
+        //  Width
         const widthValue = computedStyle.getPropertyValue('width');
         if (widthValue && widthValue !== 'none' && widthValue !== 'auto') {
             if (shouldScaleWidth) {
@@ -108,6 +110,7 @@ function runCleanViewer() {
             }
         }
         
+        // Height
         const heightValue = computedStyle.getPropertyValue('height');
         if (heightValue && heightValue !== 'none' && heightValue !== 'auto') {
             if (shouldScaleHeight) {
@@ -123,7 +126,7 @@ function runCleanViewer() {
             }
         }
         
-        // Xử lý Margin
+        // Margin
         ['margin-top', 'margin-right', 'margin-bottom', 'margin-left'].forEach(prop => {
             const value = computedStyle.getPropertyValue(prop);
             if (value && value !== 'auto') {
@@ -138,8 +141,8 @@ function runCleanViewer() {
                 }
             }
         });
-
-    
+        
+        // Scale Font
         scaleProps.forEach(prop => {
             const value = computedStyle.getPropertyValue(prop);
             if (value && value !== 'none' && value !== 'auto' && value !== 'normal') {
@@ -213,14 +216,13 @@ function runCleanViewer() {
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px;
             display: block !important;
             
-            /* --- COMBO HỦY DIỆT LẰN ĐEN --- */
             border: none !important;
-            overflow: hidden !important;   /* Cách 1: Ẩn phần thừa */
-            clip-path: inset(0 0 2px 0);   /* Cách 2: Cắt phăng 2px dưới đáy cho tiệt nọc luôn */
+            overflow: hidden !important;   
+            clip-path: inset(0 0 2px 0);   
         }
         
         .layer-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .layer-bg img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; border: none !important; outline: none !important; }
+        .layer-bg img { display: block; border: none !important; outline: none !important; }
         
         .layer-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; overflow: visible !important; }
         .layer-text .pc, .layer-text .pc * { 
@@ -241,12 +243,13 @@ function runCleanViewer() {
                 box-shadow: none !important;
                 page-break-after: always !important;
                 break-after: always !important;
-                border: none !important; /* Đảm bảo khi in không có viền đen */
+                border: none !important; 
             }
         }
     `;
     document.head.appendChild(styleTag);
 
+    // Build
     const viewerContainer = document.createElement('div');
     viewerContainer.id = 'clean-viewer-container';
 
@@ -254,7 +257,7 @@ function runCleanViewer() {
     
     pages.forEach((page) => {
         const pc = page.querySelector('.pc');
-        // Logic tính toán kích thước
+        // Fallback Res
         let width = 595.3;
         let height = 841.9;
 
@@ -309,9 +312,8 @@ function runCleanViewer() {
 
     document.body.appendChild(viewerContainer);
     
-    // Tự động mở hộp thoại in sau 1 giây
+    //  mở hộp thoại in sau 1 giây
     setTimeout(() => {
         window.print();
     }, 1000);
-
 }
