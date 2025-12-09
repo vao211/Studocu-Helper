@@ -1,3 +1,4 @@
+// ============ HÀM CẬP NHẬT TRẠNG THÁI ============
 function updateStatus(msg, isProcessing = false) {
     const statusText = document.getElementById('status-text');
     const statusBar = document.getElementById('status');
@@ -15,7 +16,7 @@ function updateStatus(msg, isProcessing = false) {
     }
 }
 
-// Delete Cookies & Reload
+// --- BUTTON 1: XÓA COOKIES & RELOAD ---
 document.getElementById('clearBtn').addEventListener('click', async () => {
     updateStatus("Đang quét và xóa cookie...", true);
     
@@ -44,14 +45,14 @@ document.getElementById('clearBtn').addEventListener('click', async () => {
     }
 });
 
-// PDF 
+// --- BUTTON 2: TẠO GIAO DIỆN SẠCH & IN PDF ---
 document.getElementById('checkBtn').addEventListener('click', async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
-    // Inject CSS (co le~ khong co tac dung may:)
+    // Inject viewer styles
     chrome.scripting.insertCSS({
         target: { tabId: tab.id },
-        files: ["custom_style.css"]
+        files: ["viewer_styles.css"]
     });
 
     chrome.scripting.executeScript({
@@ -72,6 +73,7 @@ function runCleanViewer() {
     const SCALE_FACTOR = 4;
     const HEIGHT_SCALE_DIVISOR = 4;
 
+    // --- HELPER FUNCTIONS ---
     function copyComputedStyle(source, target, scaleFactor, shouldScaleHeight = false, shouldScaleWidth = false, heightScaleDivisor = 4, widthScaleDivisor = 4, shouldScaleMargin = false, marginScaleDivisor = 4) {
         const computedStyle = window.getComputedStyle(source);
         
@@ -94,7 +96,6 @@ function runCleanViewer() {
             }
         });
         
-        //  Width
         const widthValue = computedStyle.getPropertyValue('width');
         if (widthValue && widthValue !== 'none' && widthValue !== 'auto') {
             if (shouldScaleWidth) {
@@ -110,7 +111,6 @@ function runCleanViewer() {
             }
         }
         
-        // Height
         const heightValue = computedStyle.getPropertyValue('height');
         if (heightValue && heightValue !== 'none' && heightValue !== 'auto') {
             if (shouldScaleHeight) {
@@ -126,7 +126,6 @@ function runCleanViewer() {
             }
         }
         
-        // Margin
         ['margin-top', 'margin-right', 'margin-bottom', 'margin-left'].forEach(prop => {
             const value = computedStyle.getPropertyValue(prop);
             if (value && value !== 'auto') {
@@ -142,7 +141,6 @@ function runCleanViewer() {
             }
         });
         
-        // Scale Font
         scaleProps.forEach(prop => {
             const value = computedStyle.getPropertyValue(prop);
             if (value && value !== 'none' && value !== 'auto' && value !== 'normal') {
@@ -199,65 +197,14 @@ function runCleanViewer() {
         return clone;
     }
 
-    const styleTag = document.createElement('style');
-    styleTag.textContent = `
-        body { background-color: #f6f7fb !important; margin: 0 !important; overflow: auto !important; }
-        
-        body > *:not(#clean-viewer-container) { display: none !important; }
-        
-        #clean-viewer-container {
-            position: absolute; top: 0; left: 0; width: 100%;
-            display: flex; flex-direction: column; align-items: center;
-            padding: 30px 0; z-index: 9999;
-        }
-        
-        .std-page {
-            position: relative !important; background-color: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px;
-            display: block !important;
-            
-            border: none !important;
-            overflow: hidden !important;   
-            clip-path: inset(0 0 2px 0);   
-        }
-        
-        .layer-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .layer-bg img { display: block; border: none !important; outline: none !important; }
-        
-        .layer-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; overflow: visible !important; }
-        .layer-text .pc, .layer-text .pc * { 
-            transform: none !important; overflow: visible !important; 
-            max-width: none !important; max-height: none !important; 
-        }
-        
-        @media print {
-            @page { margin: 0; size: auto; }
-            body { background-color: white !important; -webkit-print-color-adjust: exact; }
-            #clean-viewer-container { 
-                position: static !important; width: 100% !important; 
-                padding: 0 !important; margin: 0 !important; 
-            }
-            .std-page {
-                margin: 0 !important; 
-                margin-bottom: 0 !important;
-                box-shadow: none !important;
-                page-break-after: always !important;
-                break-after: always !important;
-                border: none !important; 
-            }
-        }
-    `;
-    document.head.appendChild(styleTag);
-
-    // Build
+    // ============ BUILD VIEWER ============
     const viewerContainer = document.createElement('div');
     viewerContainer.id = 'clean-viewer-container';
 
     let successCount = 0;
     
-    pages.forEach((page) => {
+    pages.forEach((page, index) => {
         const pc = page.querySelector('.pc');
-        // Fallback Res
         let width = 595.3;
         let height = 841.9;
 
@@ -280,10 +227,13 @@ function runCleanViewer() {
         
         const newPage = document.createElement('div');
         newPage.className = 'std-page';
+        newPage.id = `page-${index + 1}`;
+        newPage.setAttribute('data-page-number', index + 1);
+        
         newPage.style.width = width + 'px';
         newPage.style.height = height + 'px';
 
-        // Layer Ảnh
+        // Layer ảnh
         const originalImg = page.querySelector('img.bi') || page.querySelector('img');
         if (originalImg) {
             const bgLayer = document.createElement('div');
@@ -312,7 +262,6 @@ function runCleanViewer() {
 
     document.body.appendChild(viewerContainer);
     
-    //  mở hộp thoại in sau 1 giây
     setTimeout(() => {
         window.print();
     }, 1000);
