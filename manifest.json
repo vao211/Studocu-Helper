@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Studocu Cleaner",
+  "name": "Studocu Helper",
   "version": "1.0", 
   "permissions": [
     "cookies",
