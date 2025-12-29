@@ -58,7 +58,7 @@ async function runAutoScroll() {
     return new Promise((resolve) => {
         //Cấu hình tốc độ
         //-------------------
-        const distance = 200;
+        const distance = 400; 
         const delay = 50; 
         //-------------------
         const timer = setInterval(() => {
